@@ -1,0 +1,1042 @@
+/* Neue Haas Grotesk loaded via Adobe Typekit (wee6jtd)
+   Display variant for headings, Text variant for body/UI */
+
+* { box-sizing: border-box; }
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  font-family: "neue-haas-grotesk-text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-feature-settings: 'kern' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
+}
+
+body {
+  background: #e7e0d5;
+  color: #111;
+}
+
+#fade-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+  z-index: 120;
+}
+
+#fade-overlay.active {
+  opacity: 1;
+}
+
+.topbar {
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+}
+
+.main-nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.nav-link {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.86);
+  cursor: pointer;
+  font-family: "neue-haas-grotesk-text", "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 600;
+  font-size: 0.88rem;
+  letter-spacing: 0.01em;
+}
+
+.nav-link.active {
+  background: #111;
+  color: #fff;
+}
+
+body.landing-mode .topbar {
+  display: none !important;
+}
+
+.app-shell {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.landing-3d {
+  display: none;
+  position: absolute;
+  inset: 0;
+  grid-template-columns: none;
+  min-height: 100vh;
+  background: #e1dcd4;
+  color: #111;
+  overflow: hidden;
+}
+
+.landing-3d.active {
+  display: block;
+}
+
+.landing-3d::before,
+.landing-3d::after {
+  display: none;
+}
+
+.how-btn {
+  position: absolute;
+  right: 40px;
+  top: 32px;
+  z-index: 10;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 22px;
+  background: rgba(255,255,255,0.92);
+  font-family: "neue-haas-grotesk-text", "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+}
+
+/* Landing left panel â€” hidden; info now lives inside the 3D room as interactive objects */
+.landing-left       { display: none !important; }
+.landing-card       { display: none !important; }
+.landing-kicker     { display: none !important; }
+.landing-title      { display: none !important; }
+.landing-description{ display: none !important; }
+.landing-list       { display: none !important; }
+
+.landing-right {
+  position: absolute;
+  inset: 0;
+  display: block;
+  padding: 0;
+}
+
+.room-stage-3d {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  perspective: none;
+  transform-style: flat;
+}
+
+.room-stage-3d::before,
+.room-stage-3d::after {
+  display: none;
+}
+
+.room3d-mount {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.room3d-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Old HTML label wrappers â€” hidden; JS creates its own fixed-position labels */
+.room3d-wall-copy {
+  display: none !important;
+}
+
+.room3d-copy {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: max-content;
+  pointer-events: none;
+  z-index: 7;
+}
+
+.room3d-copy-label {
+  opacity: 0;
+}
+
+.memory-copy    .room3d-copy-label { color: #6e1a20; }
+.pattern-copy   .room3d-copy-label { color: #18347a; }
+.resistance-copy .room3d-copy-label { color: #1a4520; }
+.discomfort-copy .room3d-copy-label { color: #50380c; }
+
+.landing-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  transform: translateX(-50%);
+  z-index: 6;
+  color: rgba(0,0,0,0.38);
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.landing-arrow {
+  display: block;
+  margin-top: 8px;
+  font-size: 1.1rem;
+  opacity: 0.5;
+}
+
+.how-panel,
+.how-panel * {
+  font-family: "neue-haas-grotesk-text", "Helvetica Neue", Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.how-panel {
+  position: fixed;
+  right: 24px;
+  top: 90px;
+  width: min(320px, calc(100vw - 32px));
+  padding: 26px 24px 22px;
+  border-radius: 18px;
+  background: rgba(246,242,236,0.97);
+  border: 1px solid rgba(0,0,0,0.07);
+  box-shadow: 0 14px 44px rgba(0,0,0,0.10);
+  z-index: 90;
+  transform: translateY(-10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.26s ease, transform 0.26s ease;
+}
+
+.how-panel.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.how-close {
+  position: absolute;
+  right: 14px;
+  top: 12px;
+  border: none;
+  background: transparent;
+  font-size: 1.3rem;
+  line-height: 1;
+  color: rgba(0,0,0,0.35);
+  cursor: pointer;
+  font-family: "neue-haas-grotesk-text", "Helvetica Neue", Helvetica, sans-serif;
+  transition: color 0.15s;
+}
+.how-close:hover { color: rgba(0,0,0,0.7); }
+
+.how-kicker {
+  margin: 0 0 10px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.30em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+}
+
+.how-title {
+  margin: 0 0 14px;
+  font-size: 1.28rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  color: #111;
+}
+
+.how-text {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: rgba(0,0,0,0.62);
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  margin: 0 0 10px;
+}
+.how-text:last-child { margin-bottom: 0; }
+
+.how-divider {
+  border: none;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  margin: 16px 0;
+}
+
+.how-private {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 12px 14px;
+  background: rgba(0,0,0,0.04);
+  border-radius: 10px;
+  margin-top: 14px;
+}
+.how-private-icon {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+.how-private-text {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: rgba(0,0,0,0.52);
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+}
+
+.how-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.12);
+  z-index: 80;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.how-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 3D integration fixes: keep landing custom, restore clean room readability. */
+body:not(.landing-mode) .topbar {
+  top: 14px;
+  left: 50%;
+  right: auto;
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(14px);
+}
+
+body:not(.landing-mode) .main-nav {
+  gap: 0;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+/* Subtle connector dots between the four core rooms */
+body:not(.landing-mode) .nav-link[data-room="memory"],
+body:not(.landing-mode) .nav-link[data-room="pattern"],
+body:not(.landing-mode) .nav-link[data-room="resistance"],
+body:not(.landing-mode) .nav-link[data-room="discomfort"] {
+  position: relative;
+}
+
+body:not(.landing-mode) .nav-link[data-room="memory"]::after,
+body:not(.landing-mode) .nav-link[data-room="pattern"]::after,
+body:not(.landing-mode) .nav-link[data-room="resistance"]::after {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.22);
+  margin: 0 4px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+body:not(.landing-mode) .nav-link {
+  min-width: auto;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: rgba(0, 0, 0, 0.72);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  text-shadow: none;
+  white-space: nowrap;
+}
+
+body:not(.landing-mode) .nav-link.active {
+  background: #111;
+  color: #fff;
+}
+
+/* Each room's active nav pill takes a muted tint of that room's color */
+body.memory-room     .nav-link[data-room="memory"].active     { background: #c44048; color: #fff; }
+body.pattern-room    .nav-link[data-room="pattern"].active    { background: #4868b8; color: #fff; }
+body.resistance-room .nav-link[data-room="resistance"].active { background: #3e8650; color: #fff; }
+body.discomfort-room .nav-link[data-room="discomfort"].active { background: #b08838; color: #fff; }
+
+.memory-room,
+.pattern-room,
+.resistance-room,
+.discomfort-room {
+  color: #0b0b0b;
+}
+
+.memory-room .room-label,
+.pattern-room .room-label,
+.resistance-room .room-label,
+.discomfort-room .room-label,
+.memory-room .question,
+.pattern-room .question,
+.resistance-room .question,
+.discomfort-room .question,
+.memory-room .subtext,
+.pattern-room .subtext,
+.resistance-room .subtext,
+.discomfort-room .subtext,
+.memory-room .notebook-meta,
+.pattern-room .notebook-meta,
+.resistance-room .notebook-meta,
+.discomfort-room .notebook-meta {
+  color: #0b0b0b;
+  text-shadow: none;
+}
+
+.memory-room .room-input,
+.pattern-room .room-input,
+.resistance-room .room-input,
+.discomfort-room .room-input {
+  color: #0b0b0b;
+  border-color: rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.memory-room .room-input::placeholder,
+.pattern-room .room-input::placeholder,
+.resistance-room .room-input::placeholder,
+.discomfort-room .room-input::placeholder {
+  color: rgba(0, 0, 0, 0.46);
+}
+
+.memory-room .ui-btn,
+.pattern-room .ui-btn,
+.resistance-room .ui-btn,
+.discomfort-room .ui-btn {
+  color: #0b0b0b;
+  border-color: rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.memory-room .ui-btn:hover,
+.pattern-room .ui-btn:hover,
+.resistance-room .ui-btn:hover,
+.discomfort-room .ui-btn:hover {
+  border-color: rgba(0, 0, 0, 0.28);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* â”€â”€ About room â€” light, minimal, reading space â”€â”€ */
+.about-room {
+  background: #f8f6f2 !important;
+  color: #0e0a06 !important;
+}
+
+.about-room .room-label {
+  color: rgba(14, 10, 6, 0.38) !important;
+  text-shadow: none !important;
+  letter-spacing: 0.22em;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.about-room .question {
+  color: #0e0a06 !important;
+  text-shadow: none !important;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  margin-bottom: 2rem;
+}
+
+.about-room .subtext,
+.about-room .about-text {
+  color: rgba(14, 10, 6, 0.60) !important;
+  text-shadow: none !important;
+  font-size: 1rem;
+  line-height: 1.72;
+  font-weight: 400;
+  max-width: 52ch;
+  margin-bottom: 1.2rem;
+}
+
+.about-room .about-anon {
+  color: rgba(14, 10, 6, 0.42) !important;
+  border-color: rgba(14, 10, 6, 0.12) !important;
+  background: rgba(14, 10, 6, 0.04) !important;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+
+/* Nav on white about room */
+body.about-room .topbar {
+  background: rgba(248, 246, 242, 0.88) !important;
+  border-color: rgba(14, 10, 6, 0.08) !important;
+}
+body.about-room .nav-link {
+  background: rgba(14, 10, 6, 0.06) !important;
+  color: rgba(14, 10, 6, 0.65) !important;
+}
+body.about-room .nav-link.active {
+  background: #0e0a06 !important;
+  color: #f8f6f2 !important;
+}
+
+@media (max-width: 1100px) {
+  .landing-left {
+    width: min(380px, calc(100vw - 40px));
+    max-width: none;
+    left: 24px;
+    top: 56px;
+  }
+
+  .landing-card {
+    width: 100%;
+  }
+
+  .room3d-copy-label {
+    font-size: 0.5rem;
+  }
+
+  body:not(.landing-mode) .topbar {
+    top: 10px;
+    width: calc(100vw - 20px);
+    border-radius: 22px;
+  }
+
+  body:not(.landing-mode) .main-nav {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  body:not(.landing-mode) .nav-link {
+    padding: 8px 10px;
+    font-size: 0.75rem;
+  }
+}
+
+/* â”€â”€ Anonymity note: small pill in notebook footer â”€â”€ */
+.notebook-anon-note {
+  font-family: "neue-haas-grotesk-text", "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: lowercase;
+  color: rgba(14, 10, 6, 0.45);
+  text-align: center;
+  margin-top: 8px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(14, 10, 6, 0.12);
+  background: rgba(14, 10, 6, 0.05);
+  display: inline-block;
+}
+
+.about-anon {
+  font-family: "neue-haas-grotesk-text", "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(14, 10, 6, 0.42);
+  margin-top: 28px;
+  padding: 10px 18px;
+  border: 1px solid rgba(14, 10, 6, 0.12);
+  border-radius: 999px;
+  display: inline-block;
+  background: rgba(14, 10, 6, 0.04);
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   ROOM ATMOSPHERIC BACKGROUNDS
+   Background-only â€” no layout changes.
+   The Memory door's ripple symbol grows into the space.
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+/* MEMORY â€” a horizon of memory.
+   Inspired by the door sign (concentric arcs) but redrawn as a distant horizon:
+   a few refined arcs low on the page, like sound or memory echoing outward.
+   Architectural, quiet, not decorative. */
+.memory-room {
+  background:
+    radial-gradient(ellipse 120% 90% at 50% 85%, #5a0f15 0%, #35080c 45%, #1a0305 100%) !important;
+  position: relative;
+}
+
+/* LAYER 1 â€” distant horizon arcs (the door symbol reimagined as architecture) */
+.memory-room::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='xMidYMax slice'%3E%3Cdefs%3E%3Cfilter id='soft' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeGaussianBlur stdDeviation='0.8'/%3E%3C/filter%3E%3CradialGradient id='fade' cx='50%25' cy='100%25' r='70%25'%3E%3Cstop offset='0%25' stop-color='%23ff5060' stop-opacity='0.55'/%3E%3Cstop offset='100%25' stop-color='%23ff5060' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cg transform='translate(800 1200)' fill='none' filter='url(%23soft)'%3E%3Cpath d='M -1100 0 A 1100 1100 0 0 1 1100 0' stroke='url(%23fade)' stroke-width='1.5' opacity='0.9'/%3E%3Cpath d='M -880 0 A 880 880 0 0 1 880 0' stroke='%23ff5060' stroke-width='1.2' opacity='0.32'/%3E%3Cpath d='M -680 0 A 680 680 0 0 1 680 0' stroke='%23ff5565' stroke-width='1' opacity='0.26'/%3E%3Cpath d='M -500 0 A 500 500 0 0 1 500 0' stroke='%23ff6070' stroke-width='1' opacity='0.22'/%3E%3Cpath d='M -340 0 A 340 340 0 0 1 340 0' stroke='%23ff7080' stroke-width='0.8' opacity='0.18'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+}
+
+/* LAYER 2 â€” atmospheric depth: vignette + soft drifting light */
+.memory-room::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    /* drifting warm light from upper left */
+    radial-gradient(ellipse 55% 45% at 25% 20%, rgba(255, 120, 110, 0.10) 0%, transparent 70%),
+    /* vignette */
+    radial-gradient(ellipse 140% 100% at 50% 50%, transparent 55%, rgba(0,0,0,0.35) 100%);
+  animation: memoryDrift 22s ease-in-out infinite;
+}
+
+@keyframes memoryDrift {
+  0%, 100% { opacity: 0.85; transform: translate3d(0, 0, 0); }
+  50%      { opacity: 1.00; transform: translate3d(18px, -10px, 0); }
+}
+
+/* â”€â”€ RIPPLE LAYER â€” keystroke reactions â”€â”€
+   JS appends .memory-ripple elements to this container on each keystroke. */
+.memory-ripple-field {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  transition: opacity 0.8s ease;
+}
+
+.memory-ripple {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 100, 110, 0.45);
+  background: radial-gradient(circle, rgba(255, 100, 110, 0.12) 0%, rgba(255, 100, 110, 0.04) 40%, transparent 75%);
+  transform: translate(-50%, -50%) scale(0);
+  animation: memoryRippleOut 3.2s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+@keyframes memoryRippleOut {
+  0%   { transform: translate(-50%, -50%) scale(0);   opacity: 0.85; border-width: 2px; }
+  15%  { opacity: 0.75; }
+  60%  { opacity: 0.35; border-width: 1.5px; }
+  100% { transform: translate(-50%, -50%) scale(60);  opacity: 0;    border-width: 1px; }
+}
+
+/* Subtle grain overlay for tactile texture â€” only visible in memory room */
+.grain-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+body.memory-room .grain-layer {
+  opacity: 0.09;
+}
+
+/* Other rooms â€” base color only for now */
+.pattern-room    { background: radial-gradient(ellipse 90% 70% at 50% 40%, #1d2845 0%, #131c34 50%, #0c1424 100%) !important; }
+.resistance-room { background: radial-gradient(ellipse 110% 90% at 40% 55%, #1a3d22 0%, #112818 50%, #0a1c10 100%) !important; }
+.discomfort-room { background: radial-gradient(ellipse 90% 70% at 50% 40%, #3a2e10 0%, #2a210a 50%, #1c1606 100%) !important; }
+
+/* Light text on dark room backgrounds â€” no layout changes */
+.memory-room,
+.pattern-room,
+.resistance-room,
+.discomfort-room {
+  color: #0e0a06 !important;
+}
+
+.memory-room .room-label,
+.pattern-room .room-label,
+.resistance-room .room-label,
+.discomfort-room .room-label {
+  color: rgba(14, 10, 6, 0.52) !important;
+}
+
+.memory-room .question,
+.pattern-room .question,
+.resistance-room .question,
+.discomfort-room .question {
+  color: #0e0a06 !important;
+  text-shadow: none !important;
+}
+
+.memory-room .subtext,
+.pattern-room .subtext,
+.resistance-room .subtext,
+.discomfort-room .subtext {
+  color: rgba(14, 10, 6, 0.65) !important;
+}
+
+.memory-room .ui-btn,
+.pattern-room .ui-btn,
+.resistance-room .ui-btn,
+.discomfort-room .ui-btn {
+  color: #0e0a06 !important;
+  border-color: rgba(14, 10, 6, 0.22) !important;
+  background: rgba(14, 10, 6, 0.06) !important;
+}
+.memory-room .ui-btn:hover,
+.pattern-room .ui-btn:hover,
+.resistance-room .ui-btn:hover,
+.discomfort-room .ui-btn:hover {
+  border-color: rgba(14, 10, 6, 0.35) !important;
+  background: rgba(14, 10, 6, 0.12) !important;
+}
+
+.memory-room .room-input,
+.pattern-room .room-input,
+.resistance-room .room-input,
+.discomfort-room .room-input {
+  background: rgba(14, 10, 6, 0.05) !important;
+  border-color: rgba(14, 10, 6, 0.18) !important;
+}
+.memory-room .room-input::placeholder,
+.pattern-room .room-input::placeholder,
+.resistance-room .room-input::placeholder,
+.discomfort-room .room-input::placeholder {
+  color: rgba(14, 10, 6, 0.30) !important;
+}
+
+.memory-room .notebook-hint,
+.pattern-room .notebook-hint,
+.resistance-room .notebook-hint,
+.discomfort-room .notebook-hint,
+.memory-room .notebook-page-indicator,
+.pattern-room .notebook-page-indicator,
+.resistance-room .notebook-page-indicator,
+.discomfort-room .notebook-page-indicator {
+  color: rgba(14, 10, 6, 0.45) !important;
+}
+
+/* â”€â”€ Notebook handwriting â€” natural, legible, ink-on-paper feel â”€â”€ */
+/* Caveat: designed for natural handwriting at all sizes, variable weight */
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   NOTEBOOK HANDWRITING â€” Kalam font, ink-sharp
+   Line-height matched to notebook ruled lines
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+/* Override the notebook page background so we control the ruled line spacing exactly.
+   32px per line â€” text line-height is set to match this precisely. */
+.notebook-page {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 31px,
+    rgba(140, 160, 200, 0.18) 31px,
+    rgba(140, 160, 200, 0.18) 32px
+  ) !important;
+  background-size: 100% 32px !important;
+  background-position: 0 8px !important; /* offset so first line sits under first text row */
+}
+
+.notebook-writing {
+  font-family: 'Kalam', cursive !important;
+  font-size: 1.08rem !important;
+  font-weight: 400 !important;
+  /* line-height in px = exactly 32px to sit on each ruled line */
+  line-height: 32px !important;
+  /* padding-top aligns first baseline to first ruled line */
+  padding-top: 6px !important;
+  color: #0e0a06 !important;
+  opacity: 1 !important;
+  letter-spacing: 0.01em !important;
+  word-spacing: 0.04em !important;
+  /* Safari crisp rendering */
+  -webkit-font-smoothing: antialiased !important;
+  text-rendering: geometricPrecision !important;
+  transform: translateZ(0) !important;
+  white-space: pre-wrap;
+  word-break: break-word;
+  box-sizing: border-box;
+}
+
+/* Textarea â€” same font and line-height so typing matches what appears in notebook */
+.room-input {
+  font-family: 'Kalam', cursive !important;
+  font-size: 1.08rem !important;
+  font-weight: 400 !important;
+  line-height: 32px !important;
+  color: #0e0a06 !important;
+  letter-spacing: 0.01em !important;
+  -webkit-font-smoothing: antialiased !important;
+  transform: translateZ(0) !important;
+}
+
+.room-input::placeholder {
+  font-family: 'Kalam', cursive !important;
+  color: rgba(14, 10, 6, 0.28) !important;
+  font-style: italic;
+  font-weight: 300 !important;
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   PATTERN ROOM â€” dot burst typing effect
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.pattern-dot-field {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  transition: opacity 0.8s ease;
+}
+
+.pattern-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(140, 175, 255, 0.72);
+  transform: translate(-50%, -50%) translate(0px, 0px) scale(1);
+  animation: patternDotFly linear forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes patternDotFly {
+  0% {
+    transform: translate(-50%, -50%) translate(0px, 0px) scale(1);
+    opacity: 0.88;
+  }
+  15% {
+    opacity: 0.80;
+    transform: translate(-50%, -50%) translate(calc(var(--tx) * 0.18), calc(var(--ty) * 0.18)) scale(1.15);
+  }
+  55% {
+    opacity: 0.45;
+    transform: translate(-50%, -50%) translate(calc(var(--tx) * 0.65), calc(var(--ty) * 0.65)) scale(0.75);
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(var(--tx), var(--ty)) scale(0.1);
+    opacity: 0;
+  }
+}
+
+/* Ensure pattern-room layers sit behind content */
+body.pattern-room .pattern-dot-field {
+  z-index: 1;
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   PORTRAIT SYSTEM
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+/* Trigger button in About room */
+/* â”€â”€ Portrait trigger button â€” dark on white About room â”€â”€ */
+.portrait-trigger {
+  margin-top: 40px;
+  display: none;
+  padding: 14px 30px;
+  border-radius: 999px;
+  border: none;
+  background: #0e0a06;
+  color: #f8f6f2;
+  font-family: "neue-haas-grotesk-text", "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.portrait-trigger:hover {
+  background: #2a1f14;
+  transform: translateY(-1px);
+}
+
+.portrait-hint {
+  margin-top: 20px;
+  font-family: "neue-haas-grotesk-text", "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 0.70rem;
+  color: rgba(14, 10, 6, 0.32);
+  letter-spacing: 0.08em;
+}
+
+/* Full-screen portrait overlay â€” white, minimal, reading space */
+.portrait-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: #f8f6f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.55s ease;
+}
+.portrait-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.portrait-inner {
+  max-width: 560px;
+  width: calc(100vw - 64px);
+  padding: 0;
+  text-align: left;
+}
+
+.portrait-kicker {
+  font-family: "neue-haas-grotesk-text", "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: rgba(14, 10, 6, 0.30);
+  margin: 0 0 40px;
+  text-transform: uppercase;
+  display: block;
+}
+
+.portrait-text {
+  font-family: "neue-haas-grotesk-text", "Helvetica Neue", Helvetica, sans-serif;
+  font-size: clamp(1.12rem, 2vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.80;
+  color: #0e0a06;
+  letter-spacing: -0.01em;
+  min-height: 120px;
+}
+
+.portrait-sentence {
+  opacity: 0;
+  transform: translateY(5px);
+  display: inline;
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.portrait-sentence.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.portrait-close {
+  margin-top: 56px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(14, 10, 6, 0.16);
+  background: transparent;
+  color: rgba(14, 10, 6, 0.38);
+  font-family: "neue-haas-grotesk-text", "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: color 0.18s ease, border-color 0.18s ease;
+  display: inline-block;
+}
+.portrait-close:hover {
+  color: rgba(14, 10, 6, 0.72);
+  border-color: rgba(14, 10, 6, 0.30);
+}
+
+/* â”€â”€ Neue Haas Grotesk Display â€” large headings â”€â”€ */
+.landing-title,
+.question,
+.how-title,
+.portrait-text {
+  font-family: "neue-haas-grotesk-display", "Helvetica Neue", Helvetica, sans-serif !important;
+}
+
+/* â”€â”€ Portrait inline â€” renders directly in the About/Portrait room â”€â”€ */
+.portrait-room-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 560px;
+}
+
+.portrait-inline-hint {
+  font-family: "neue-haas-grotesk-text", "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 0.78rem;
+  color: rgba(14, 10, 6, 0.32);
+  letter-spacing: 0.06em;
+  margin-top: 8px;
+}
+
+.portrait-inline-text {
+  font-family: "neue-haas-grotesk-display", "Helvetica Neue", Helvetica, sans-serif;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.82;
+  color: #0e0a06;
+  letter-spacing: -0.01em;
+  min-height: 80px;
+  display: none;
+}
+
+.portrait-inline-anon {
+  font-family: "neue-haas-grotesk-text", "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 0.68rem;
+  color: rgba(14, 10, 6, 0.28);
+  letter-spacing: 0.10em;
+  text-transform: lowercase;
+  margin-top: 40px;
+}
+
+/* â”€â”€ About/Portrait room â€” force white background, override black-room â”€â”€ */
+.about-room {
+  background: #f8f6f2 !important;
+}
+
+/* Portrait room panel â€” proper vertical centering with breathing room */
+.portrait-room-panel {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  max-width: 560px !important;
+  padding-top: 0 !important;
+}
+
+/* Kicker â€” YOUR PORTRAIT label */
+.about-room .room-label {
+  font-family: "neue-haas-grotesk-text", "Helvetica Neue", Helvetica, sans-serif !important;
+  font-size: 0.65rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.30em !important;
+  color: rgba(14, 10, 6, 0.30) !important;
+  text-transform: uppercase !important;
+  margin-bottom: 32px !important;
+}
+
+.portrait-inline-text {
+  color: #0e0a06 !important;
+}
+
+.portrait-sentence {
+  color: #0e0a06 !important;
+}
+
+.portrait-inline-hint {
+  color: rgba(14, 10, 6, 0.38) !important;
+  font-size: 0.82rem !important;
+  letter-spacing: 0.02em !important;
+}

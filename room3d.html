@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reflective Rooms 3D</title>
+  <link rel="stylesheet" href="https://use.typekit.net/wee6jtd.css">
+  <link rel="stylesheet" href="../reflective-rooms.css" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div id="fade-overlay"></div>
+
+  <header class="topbar">
+    <nav class="main-nav">
+      <button class="nav-link active" data-room="memory" type="button">Memory</button>
+      <button class="nav-link" data-room="pattern" type="button">Pattern</button>
+      <button class="nav-link" data-room="resistance" type="button">Resistance</button>
+      <button class="nav-link" data-room="discomfort" type="button">Discomfort</button>
+      <button class="nav-link" data-room="about" type="button">About</button>
+      <button class="nav-link home-link" id="homeLink" type="button">Home</button>
+    </nav>
+  </header>
+
+  <main class="app-shell">
+    <section class="landing active landing-3d" id="landing">
+      <button class="how-btn" id="howBtn" type="button">How it works</button>
+
+      <div class="landing-left">
+        <p class="landing-kicker">WELCOME TO</p>
+        <h1 class="landing-title">Reflective Rooms</h1>
+        <p class="landing-description">
+          A space for honest reflection.<br>
+          You choose where to begin.
+        </p>
+
+        <div class="landing-card">
+          <p class="landing-card-text">
+            Reflective Rooms is an interactive, self-guided environment built around four emotional spaces.
+            Each room invites a different kind of reflection. There is no fixed order.
+          </p>
+
+          <ul class="landing-list">
+            <li>Private</li>
+            <li>Anonymous</li>
+            <li>Non-linear</li>
+            <li>Self-guided</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="landing-right">
+        <div class="room-stage room-stage-3d">
+          <div class="room3d-mount" id="room3dMount" aria-hidden="true"></div>
+
+          <div class="room3d-wall-copy" aria-hidden="true">
+            <div class="room3d-copy memory-copy">
+              <span id="label-memory" class="room3d-copy-label">MEMORY</span>
+            </div>
+            <div class="room3d-copy pattern-copy">
+              <span id="label-pattern" class="room3d-copy-label">PATTERN</span>
+            </div>
+            <div class="room3d-copy resistance-copy">
+              <span id="label-resistance" class="room3d-copy-label">RESISTANCE</span>
+            </div>
+            <div class="room3d-copy discomfort-copy">
+              <span id="label-discomfort" class="room3d-copy-label">DISCOMFORT</span>
+            </div>
+          </div>
+
+          <div class="landing-hint">
+            <span>Choose a room to begin</span>
+            <span class="landing-arrow">↓</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="how-panel" id="howPanel" aria-hidden="true">
+      <button class="how-close" id="howClose" type="button">×</button>
+      <p class="how-kicker">How it works</p>
+      <h2 class="how-title">Don't read. Explore.</h2>
+      <p class="how-text">
+        Move through the room. Hover over the objects: the plants, the table, the signs above the doors. Each one holds something.
+      </p>
+      <p class="how-text">
+        When you find a room that calls to you, walk in.
+      </p>
+      <hr class="how-divider" />
+      <div class="how-private">
+        <span class="how-private-icon">○</span>
+        <span class="how-private-text">Anonymous by design. Nothing is recorded, stored, or shared.</span>
+      </div>
+    </div>
+
+    <div class="how-overlay" id="howOverlay"></div>
+
+    <video id="camera" autoplay playsinline muted></video>
+
+    <div class="layer color-overlay"></div>
+    <div class="layer bright-tint"></div>
+    <div class="layer scanlines"></div>
+    <div class="layer noise"></div>
+    <div class="layer pattern-presence"></div>
+
+    <div id="projection-layer"></div>
+
+    <div class="notebook-shell" id="notebookShell">
+      <div class="notebook-stage" id="notebookStage" aria-label="Interactive notebook">
+        <div class="notebook-object" id="notebookObject" style="--notebook-rotate:0deg;">
+          <div class="notebook-face cover-face">
+            <div class="book-cover front-cover">
+              <div class="cover-title">journal</div>
+            </div>
+          </div>
+
+          <div class="notebook-face spread-face">
+            <div class="spread-wrap">
+              <div class="book-thickness"></div>
+              <div class="notebook-book">
+                <div class="notebook-page notebook-left" id="notebookLeftPage">
+                  <div id="notebookWritingLeft" class="notebook-writing"></div>
+                </div>
+                <div class="notebook-spine"></div>
+                <div class="notebook-page notebook-right" id="notebookRightPage">
+                  <div id="notebookWritingRight" class="notebook-writing"></div>
+                  <div class="page-turn-overlay" id="pageTurnOverlay"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="notebook-face back-face">
+            <div class="book-cover back-cover">
+              <div class="back-title">journal</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="notebook-meta">
+        <div class="notebook-hint">click left page to go back and right page to go forward</div>
+        <div class="notebook-page-indicator" id="notebookPageIndicator">Page 1–2</div>
+      </div>
+    </div>
+
+    <section class="room active" id="memory">
+      <div class="panel">
+        <p class="room-label">MEMORY</p>
+        <h1 class="question">
+          What do you keep returning to,<br>
+          even when you tell yourself<br>
+          it’s over?
+        </h1>
+        <p class="subtext">This may not be a memory. It may be a reconstruction.</p>
+
+        <button id="presenceBtn" class="ui-btn presence-btn" type="button">Show Presence</button>
+
+        <div class="input-wrap">
+          <textarea id="memoryInput" class="room-input" data-room="memory" placeholder="Write something you never say out loud..."></textarea>
+          <div class="btn-row">
+            <button class="ui-btn submit-btn" data-target="memoryInput" type="button">Submit</button>
+            <button class="ui-btn clear-btn" data-room="memory" type="button">Clear Room Text</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="room" id="pattern">
+      <div class="panel">
+        <p class="room-label">PATTERN</p>
+        <h1 class="question">
+          When did you first notice<br>
+          this pattern repeating?
+        </h1>
+        <p class="subtext">Repetition can feel familiar before it feels visible.</p>
+
+        <button class="ui-btn presence-btn presence-toggle" type="button">Show Presence</button>
+
+        <div class="input-wrap">
+          <textarea id="patternInput" class="room-input" data-room="pattern" placeholder="Write what keeps repeating..."></textarea>
+          <div class="btn-row">
+            <button class="ui-btn submit-btn" data-target="patternInput" type="button">Submit</button>
+            <button class="ui-btn clear-btn" data-room="pattern" type="button">Clear Room Text</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="room" id="resistance">
+      <div class="panel">
+        <p class="room-label">RESISTANCE</p>
+        <h1 class="question">
+          What are you protecting<br>
+          yourself from?
+        </h1>
+        <p class="subtext">Resistance can be a shield, a habit, or a survival language.</p>
+
+        <button class="ui-btn presence-btn presence-toggle" type="button">Show Presence</button>
+
+        <div class="input-wrap">
+          <textarea id="resistanceInput" class="room-input" data-room="resistance" placeholder="Write what you are protecting..."></textarea>
+          <div class="btn-row">
+            <button class="ui-btn submit-btn" data-target="resistanceInput" type="button">Submit</button>
+            <button class="ui-btn clear-btn" data-room="resistance" type="button">Clear Room Text</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="room" id="discomfort">
+      <div class="panel">
+        <p class="room-label">DISCOMFORT</p>
+        <h1 class="question">
+          What feels difficult<br>
+          to admit?
+        </h1>
+        <p class="subtext">Discomfort often appears before language does.</p>
+
+        <button class="ui-btn presence-btn presence-toggle" type="button">Show Presence</button>
+
+        <div class="input-wrap">
+          <textarea id="discomfortInput" class="room-input" data-room="discomfort" placeholder="Write what feels hard to admit..."></textarea>
+          <div class="btn-row">
+            <button class="ui-btn submit-btn" data-target="discomfortInput" type="button">Submit</button>
+            <button class="ui-btn clear-btn" data-room="discomfort" type="button">Clear Room Text</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="room" id="about">
+      <div class="panel black-panel portrait-room-panel">
+        <p class="room-label">YOUR PORTRAIT</p>
+        <div id="portraitInlineHint" class="portrait-inline-hint">
+          Visit at least two rooms, then return here.
+        </div>
+        <div id="portraitInlineText" class="portrait-inline-text"></div>
+        <p class="portrait-inline-anon">Anonymous by design. Nothing you write is recorded, stored, or shared.</p>
+      </div>
+    </section>
+
+    <!-- Keep overlay in DOM for compatibility but it won't be used -->
+    <div id="portraitOverlay" class="portrait-overlay" aria-hidden="true">
+      <div class="portrait-inner">
+        <p class="portrait-kicker">YOUR PORTRAIT</p>
+        <div id="portraitText" class="portrait-text"></div>
+        <div class="portrait-data" id="portraitData"></div>
+        <button id="portraitClose" class="portrait-close" type="button">Close</button>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="./main.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
